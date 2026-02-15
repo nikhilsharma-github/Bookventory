@@ -1,0 +1,5 @@
+Project Directory path: 
+cd 'P:\Bookventory\bookventory'
+
+Python Venv Path: 
+cd 'P:\Python venvs\bookventory_venv'
