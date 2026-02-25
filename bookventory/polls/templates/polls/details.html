@@ -1,17 +1,24 @@
-<form action="{% url 'polls:vote' question.id %}" method="POST">
-{% csrf_token %}
-
-    <fieldset>
-        <legend><h1>{{question.question_text}}</h1></legend>
+{% extends 'polls/base.html' %}
+{% block title %}{{ question.question_text }} — Bookventory{% endblock %}
+{% block content %}
+<div class="card">
+    <h1 class="card-title">{{ question.question_text }}</h1>
+    <form action="{% url 'polls:vote' question.id %}" method="POST">
+        {% csrf_token %}
         {% if error_message %}
-            <p><strong>{{error_message}}</strong></p>
+        <p class="error">{{ error_message }}</p>
         {% endif %}
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
-            <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label>
-            <br>
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote">
-
-</form>
+        <div class="choices">
+            {% for choice in question.choice_set.all %}
+            <label class="choice">
+                <input type="radio" name="choice" value="{{choice.id}}"> {{ choice.choice_text }}
+            </label>
+            {% endfor %}
+        </div>
+        <div class="form-actions">
+            <button class="btn primary" type="submit">Vote</button>
+            <a class="btn outline" href="{% url 'polls:results' question.id %}">Results</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

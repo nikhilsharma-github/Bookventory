@@ -1,15 +1,19 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-
+{% extends 'polls/base.html' %}
+{% block title %}Polls — Bookventory{% endblock %}
+{% block content %}
 {% if latest_question_list %}
-    <ul>
-        {% for question in latest_question_list %}
-        <li>
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        </li>
-        {% endfor %}
-    </ul>
+<h1>Latest Polls</h1>
+<ul class="poll-list">
+    {% for question in latest_question_list %}
+    <li class="poll-card">
+        <div class="poll-card-body">
+            <h3>{{ question.question_text }}</h3>
+            <a class="btn" href="{% url 'polls:detail' question.id %}">View</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>No Polls are available</p>
+<p class="muted">No Polls are available</p>
 {% endif %}
+{% endblock %}
